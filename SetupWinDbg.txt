@@ -1,0 +1,48 @@
+WinDbg:
+To set the postmortem debugger to WinDbg, run windbg -I. (The I must be capitalized.) This command will display a success or failure message after it is used. To work with both 32 and 64 bit applications, run the command for the both the 64 and 32 debuggers.
+
+Auto (REG_SZ) This REG_SZ value is always either 0 or 1.
+If Auto is set to 0, a confirmation message box is displayed prior to postmortem debugging process being started.
+If Auto is set to 1, the postmortem debugger is immediately created.
+When you manually edit the registry, do so very carefully, because improper changes to the registry may not allow Windows to boot.
+
+DWORD (%ld) - Process ID of the target process.
+
+Console:
+Copy
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe –I
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe –I
+This is how the AeDebug registry entry will be configured when windbg -I is run.
+
+Console:
+Copy
+Debugger = "<Path>\WinDbg -p %ld -e %ld -g"
+Auto = 1
+In the examples, <Path> is the directory where the debugger is located.
+The -p and -e parameters pass the Process ID and Event, as discussed previously.
+The -g passes the g (Go) command to WinDbg and continues execution from the current instruction.
+
+
+64-bit Installation:
+
+Console:
+Copy
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe –I
+This updates the registry key with these values.
+
+reg:
+Copy
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
+Debugger = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe" -p %ld -e %ld –g
+32-bit Installation:
+
+
+Console:
+Copy
+C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe –I
+This updates the registry key with these values.
+
+reg:
+Copy
+HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\AeDebug
+Debugger = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe" -p %ld -e 
